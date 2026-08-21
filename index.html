@@ -8,14 +8,14 @@
 <meta name="theme-color" content="#EFEEE9" media="(prefers-color-scheme:light)">
 <meta name="theme-color" content="#121820" media="(prefers-color-scheme:dark)">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Japão de Balcão">
+<meta property="og:title" content="Guia Japão">
 <meta property="og:description" content="136 restaurantes no Japão, filtráveis por cidade, bairro, cozinha, preço e dificuldade de reserva. Cruzamento de quem @feliperacarneiro segue no Instagram com os lugares onde amigos dele realmente comeram.">
 <meta property="og:image" content="capa.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8D%A3</text></svg>">
 </head>
 <body>
-<title>Japão de Balcão</title>
+<title>Guia Japão</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">
@@ -63,6 +63,8 @@ h1{font-family:"Zen Old Mincho",Georgia,serif;font-weight:900;letter-spacing:-.0
     letter-spacing:.12em;font-weight:400}
 .lede{margin:18px 0 0;max-width:62ch;font-size:16.5px;color:var(--ink2);text-wrap:pretty}
 .lede b{color:var(--ink);font-weight:700}
+.nota{margin:14px 0 0;max-width:70ch;font-size:13px;color:var(--ink3);line-height:1.6}
+.nota b{color:var(--ink2);font-weight:700}
 .stats{display:flex;flex-wrap:wrap;gap:26px 40px;margin:26px 0 0}
 .stat b{display:block;font-family:"Zen Old Mincho",serif;font-size:34px;line-height:1;
         font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
@@ -121,6 +123,7 @@ input[type=search]::placeholder{color:var(--ink3)}
 .tag.shut{color:var(--shu);border-color:color-mix(in srgb,var(--shu) 50%,transparent);
           background:color-mix(in srgb,var(--shu) 10%,transparent)}
 .tag.yen{font-variant-numeric:tabular-nums}
+.tag em{font-style:normal;font-weight:400;color:var(--ink3);margin-left:1px}
 .who{margin-top:9px;font-size:12.5px;color:var(--ink2);
      border-top:1px dashed var(--line);padding-top:8px}
 .who b{color:var(--ai);font-weight:700}
@@ -178,6 +181,8 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
   O que faltava era <b>procedência</b>: saber quem foi, se dá pra sentar, quanto custa.
   Aqui é a minha lista de seguindo cruzada com <b>os lugares onde amigos meus realmente
   comeram</b> — gente cujo gosto eu conheço, que vai porque gosta, não porque é publi.</p>
+  <p class="nota">Preço por pessoa, jantar: <b>¥ até 3k</b> ≈ US$ 20 · <b>¥ 3–10k</b> = US$ 20–60 ·
+  <b>¥ 10–25k</b> = US$ 60–155 · <b>¥ 25k+</b> = US$ 155+ — ao câmbio de ¥160 por dólar.</p>
   <div class="stats">
     <div class="stat"><b>136</b><span>lugares no Japão</span></div>
     <div class="stat"><b>57</b><span>com amigo que já foi</span></div>
@@ -271,6 +276,7 @@ const salvaRot = () => { try{ localStorage.setItem('jp_roteiro', JSON.stringify(
 
 const ACC = {livre:'ok',fila:'ok',dias:'ok',reserva:'med',semanas:'med',meses:'hard',fechado:'shut'};
 const YEN = {1:'até ¥3k',2:'¥3–10k',3:'¥10–25k',4:'¥25k+'};
+const USD = {1:'~US$ 20',2:'US$ 20–60',3:'US$ 60–155',4:'US$ 155+'};
 const gmaps = x => 'https://www.google.com/maps/search/?api=1&query=' +
   encodeURIComponent([(x.kj||x.n), x.b, x.c==='Tóquio'?'Tokyo':(x.c||'Japan')].filter(Boolean).join(' '));
 const tabelog = x => 'https://www.google.com/search?q=' +
@@ -293,7 +299,8 @@ function passa(x){
 
 function card(x){
   const a = x.ac ? `<span class="tag ${ACC[x.ac]||''}">${esc(x.acl)}</span>` : '';
-  const p = x.prn ? `<span class="tag yen">${YEN[x.prn]}</span>` : '';
+  const p = x.prn
+    ? `<span class="tag yen">${YEN[x.prn]} <em>${USD[x.prn]}</em></span>` : '';
   const loc = [x.b && x.b!==x.c ? x.b : '', x.c].filter(Boolean).join(' · ') || 'Japão';
   const who = (x.by||[]).length
     ? `<div class="who"><span class="lbl">já postou de lá:</span> ` +
