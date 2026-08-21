@@ -106,6 +106,8 @@ input[type=search]::placeholder{color:var(--ink3)}
 .c{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
    padding:14px 15px 13px;box-shadow:var(--shadow);position:relative}
 .c.hi{border-color:var(--ai)}
+.cn a{color:inherit;text-decoration:none}
+.cn a:hover{text-decoration:underline;text-decoration-color:var(--ai)}
 .cn{font-family:"Zen Old Mincho",serif;font-size:19px;font-weight:800;line-height:1.2;
     letter-spacing:-.01em;padding-right:30px;text-wrap:balance}
 .ck{font-family:"Zen Old Mincho",serif;color:var(--ink3);font-size:13.5px;font-weight:400;
@@ -181,6 +183,10 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
   O que faltava era <b>procedência</b>: saber quem foi, se dá pra sentar, quanto custa.
   Aqui é a minha lista de seguindo cruzada com <b>os lugares onde amigos meus realmente
   comeram</b> — gente cujo gosto eu conheço, que vai porque gosta, não porque é publi.</p>
+  <p class="nota"><b>Em cada casa</b>: o nome abre no Google Maps, <b>@</b> vai para o
+  Instagram do restaurante e <b>Tabelog</b> busca no site de avaliação que os próprios
+  japoneses usam — lá nota 3,5 já é muito bom e acima de 4,0 é raro. É onde estão horário,
+  dia de folga e, em boa parte dos casos, a reserva.</p>
   <p class="nota">Preço por pessoa, jantar: <b>¥ até 3k</b> ≈ US$ 20 · <b>¥ 3–10k</b> = US$ 20–60 ·
   <b>¥ 10–25k</b> = US$ 60–155 · <b>¥ 25k+</b> = US$ 155+ — ao câmbio de ¥160 por dólar.</p>
   <div class="stats">
@@ -277,8 +283,9 @@ const salvaRot = () => { try{ localStorage.setItem('jp_roteiro', JSON.stringify(
 const ACC = {livre:'ok',fila:'ok',dias:'ok',reserva:'med',semanas:'med',meses:'hard',fechado:'shut'};
 const YEN = {1:'até ¥3k',2:'¥3–10k',3:'¥10–25k',4:'¥25k+'};
 const USD = {1:'~US$ 20',2:'US$ 20–60',3:'US$ 60–155',4:'US$ 155+'};
+const CID_EN = {'Tóquio':'Tokyo','Hokkaido':'Hokkaido','Miyagi':'Miyagi'};
 const gmaps = x => 'https://www.google.com/maps/search/?api=1&query=' +
-  encodeURIComponent([(x.kj||x.n), x.b, x.c==='Tóquio'?'Tokyo':(x.c||'Japan')].filter(Boolean).join(' '));
+  encodeURIComponent([(x.kj||x.n), x.b, CID_EN[x.c]||x.c||'', 'Japan'].filter(Boolean).join(' '));
 const tabelog = x => 'https://www.google.com/search?q=' +
   encodeURIComponent('site:tabelog.com ' + (x.kj||x.n));
 
@@ -310,11 +317,12 @@ function card(x){
   const acts = [];
   if(x.ig) acts.push(`<a href="https://instagram.com/${esc(x.ig)}" target="_blank" rel="noopener">@${esc(x.ig)}</a>`);
   acts.push(`<a href="${gmaps(x)}" target="_blank" rel="noopener">mapa</a>`);
-  acts.push(`<a href="${tabelog(x)}" target="_blank" rel="noopener">tabelog</a>`);
+  acts.push(`<a href="${tabelog(x)}" target="_blank" rel="noopener">Tabelog</a>`);
   return `<article class="c${x.by&&x.by.length?' hi':''}">
     <button class="fav" data-id="${x.id}" aria-pressed="${ROT.has(x.id)}"
       aria-label="Salvar no roteiro">${ROT.has(x.id)?'★':'☆'}</button>
-    <div class="cn">${esc(x.n)}</div>
+    <div class="cn"><a href="${gmaps(x)}" target="_blank" rel="noopener"
+      title="Abrir no Google Maps">${esc(x.n)}</a></div>
     ${x.kj && x.kj!==x.n ? `<div class="ck">${esc(x.kj)}</div>`:''}
     <div class="cloc"><span class="t">${esc(x.t)}</span> · ${esc(loc)}</div>
     ${x.esp||x.d ? `<div class="cesp">${esc(x.d||x.esp)}</div>`:''}
