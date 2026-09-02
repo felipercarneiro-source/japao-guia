@@ -115,9 +115,12 @@ input[type=search]::placeholder{color:var(--ink3)}
 .c.hi{border-color:var(--ai)}
 .c{border-left:4px solid var(--line)}
 .c.cat-food{border-left-color:#24467C}
-.c.cat-mich{border-left-color:#B98A1C;background:color-mix(in srgb,#B98A1C 9%,var(--card))}
+/* escala de preço: verde barato · amarelo médio · prata caro · dourado muito caro */
+.c.pr1{border-left-color:#2F8A57;background:color-mix(in srgb,#2F8A57 9%,var(--card))}
+.c.pr2{border-left-color:#C9A227;background:color-mix(in srgb,#C9A227 11%,var(--card))}
+.c.pr3{border-left-color:#9AA2AC;background:color-mix(in srgb,#9AA2AC 13%,var(--card))}
+.c.pr4{border-left-color:#B98A1C;background:color-mix(in srgb,#B98A1C 16%,var(--card))}
 .c.cat-hotel{border-left-color:#A93A27;background:color-mix(in srgb,#A93A27 7%,var(--card))}
-.c.hi2{background:color-mix(in srgb,#24467C 7%,var(--card))}
 .c.cat-mich .cn a{color:#8C5F14}
 .badge{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;
   text-transform:uppercase;padding:3px 8px;border-radius:999px;margin-bottom:7px}
@@ -211,10 +214,12 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
   dia de folga e, em boa parte dos casos, a reserva.</p>
   <p class="nota">Preço por pessoa, jantar: <b>¥ até 3k</b> ≈ US$ 20 · <b>¥ 3–10k</b> = US$ 20–60 ·
   <b>¥ 10–25k</b> = US$ 60–155 · <b>¥ 25k+</b> = US$ 155+ — ao câmbio de ¥160 por dólar.</p>
-  <p class="nota">As cores dizem o que é:
-  <b style="color:#24467C">azul = onde comer e beber</b> ·
-  <b style="color:#8C5F14">★ dourado = está no Guia Michelin</b> ·
-  <b style="color:#A93A27">vermelho = hotel e o que ver</b>.</p>
+  <p class="nota">O fundo do card é o preço:
+  <b style="background:color-mix(in srgb,#2F8A57 12%,transparent);padding:1px 7px;border-radius:6px;color:#2F8A57">verde = barato</b>
+  <b style="background:color-mix(in srgb,#C9A227 14%,transparent);padding:1px 7px;border-radius:6px;color:#8a6d0f">amarelo = médio</b>
+  <b style="background:color-mix(in srgb,#9AA2AC 16%,transparent);padding:1px 7px;border-radius:6px;color:#5c656f">prata = caro</b>
+  <b style="background:color-mix(in srgb,#B98A1C 18%,transparent);padding:1px 7px;border-radius:6px;color:#8C5F14">dourado = muito caro</b>
+  · <b style="color:#8C5F14">★ = Michelin</b> · <b style="color:#A93A27">vermelho = hotel e passeio</b>.</p>
   <div class="stats">
     <div class="stat"><b>198</b><span>lugares no Japão</span></div>
     <div class="stat"><b>97</b><span>com amigo que já foi</span></div>
@@ -379,11 +384,12 @@ function card(x){
   const mich = /michelin|estrela|bib gourmand/i.test((x.esp||'')+' '+(x.d||''));
   const cat = mich ? 'cat-mich' : ((x.g==='Hotel'||x.g==='Ver e área') ? 'cat-hotel' : 'cat-food');
   const duo = !mich && cat==='cat-food' && (x.by||[]).length>=2;
+  const prc = (cat!=='cat-hotel' && x.prn) ? ' pr'+x.prn : '';
   const badge = mich ? '<span class="badge mich">★ Michelin</span>'
     : (x.g==='Hotel' ? '<span class="badge ver">Hotel</span>'
     : (x.g==='Ver e área' ? '<span class="badge ver">Passeio</span>'
     : (duo ? `<span class="badge duo">${x.by.length} pessoas já foram</span>` : '')));
-  return `<article class="c${x.by&&x.by.length?' hi':''} ${cat}${duo?' hi2':''}">
+  return `<article class="c${x.by&&x.by.length?' hi':''} ${cat}${prc}">
     <button class="fav" data-id="${x.id}" aria-pressed="${ROT.has(x.id)}"
       aria-label="Salvar no roteiro">${ROT.has(x.id)?'★':'☆'}</button>
     ${badge}
