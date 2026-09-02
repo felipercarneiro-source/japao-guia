@@ -75,6 +75,14 @@ h1{font-family:"Zen Old Mincho",Georgia,serif;font-weight:900;letter-spacing:-.0
 .bar::after{content:"";position:absolute;left:0;right:0;bottom:-14px;height:14px;
   background:linear-gradient(var(--paper),transparent);pointer-events:none}
 .searchrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.oque{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.oque button{font:inherit;font-size:14px;font-weight:800;padding:9px 16px;border-radius:999px;
+  border:2px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+.oque button .ct{opacity:.5;margin-left:6px;font-weight:600;font-variant-numeric:tabular-nums}
+.oque button[aria-pressed=true]{color:#fff}
+.oque button[data-oque=comer][aria-pressed=true]{background:#24467C;border-color:#24467C}
+.oque button[data-oque=hotel][aria-pressed=true]{background:#A93A27;border-color:#A93A27}
+.oque button[data-oque=passeio][aria-pressed=true]{background:#A93A27;border-color:#A93A27}
 input[type=search]{flex:1;min-width:210px;font:inherit;font-size:15px;color:var(--ink);
   background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:9px 13px}
 input[type=search]::placeholder{color:var(--ink3)}
@@ -216,6 +224,11 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
 </div></header>
 
 <div class="bar"><div class="wrap">
+  <div class="oque" id="oque">
+    <button data-oque="comer" aria-pressed="true">🍽 Comer e beber<span class="ct" id="ctComer"></span></button>
+    <button data-oque="hotel" aria-pressed="false">🏨 Onde ficar<span class="ct" id="ctHotel"></span></button>
+    <button data-oque="passeio" aria-pressed="false">⛩ O que ver<span class="ct" id="ctPasseio"></span></button>
+  </div>
   <div class="searchrow">
     <input type="search" id="q" placeholder="Buscar por nome, bairro, prato, cozinha…"
       aria-label="Buscar lugares">
@@ -317,7 +330,7 @@ const D = JSON.parse(document.getElementById('dados').textContent);
 const $ = s => document.querySelector(s);
 const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-let F = {q:'', cidade:new Set(), grupo:new Set(), acesso:new Set(), preco:new Set(),
+let F = {q:'', oque:'comer', cidade:new Set(), grupo:new Set(), acesso:new Set(), preco:new Set(),
          amigo:null, soAmigo:false, soRoteiro:false};
 let ROT = new Set();
 try{ ROT = new Set(JSON.parse(localStorage.getItem('jp_roteiro')||'[]')); }catch(e){}
@@ -333,6 +346,8 @@ const tabelog = x => 'https://www.google.com/search?q=' +
   encodeURIComponent('site:tabelog.com ' + (x.kj||x.n));
 
 function passa(x){
+  const macro = x.g==='Hotel' ? 'hotel' : (x.g==='Ver e área' ? 'passeio' : 'comer');
+  if(F.oque && macro!==F.oque) return false;
   if(F.cidade.size && !F.cidade.has(x.c||'Sem cidade')) return false;
   if(F.grupo.size && !F.grupo.has(x.g)) return false;
   if(F.acesso.size && !F.acesso.has(x.ac||'?')) return false;
@@ -365,8 +380,9 @@ function card(x){
   const cat = mich ? 'cat-mich' : ((x.g==='Hotel'||x.g==='Ver e área') ? 'cat-hotel' : 'cat-food');
   const duo = !mich && cat==='cat-food' && (x.by||[]).length>=2;
   const badge = mich ? '<span class="badge mich">★ Michelin</span>'
-    : (cat==='cat-hotel' ? '<span class="badge ver">Ficar e ver</span>'
-    : (duo ? `<span class="badge duo">${x.by.length} pessoas já foram</span>` : ''));
+    : (x.g==='Hotel' ? '<span class="badge ver">Hotel</span>'
+    : (x.g==='Ver e área' ? '<span class="badge ver">Passeio</span>'
+    : (duo ? `<span class="badge duo">${x.by.length} pessoas já foram</span>` : '')));
   return `<article class="c${x.by&&x.by.length?' hi':''} ${cat}${duo?' hi2':''}">
     <button class="fav" data-id="${x.id}" aria-pressed="${ROT.has(x.id)}"
       aria-label="Salvar no roteiro">${ROT.has(x.id)?'★':'☆'}</button>
@@ -412,8 +428,9 @@ function render(){
 }
 
 function limpar(){
-  F = {q:'',cidade:new Set(),grupo:new Set(),acesso:new Set(),preco:new Set(),
+  F = {q:'',oque:'comer',cidade:new Set(),grupo:new Set(),acesso:new Set(),preco:new Set(),
        amigo:null,soAmigo:false,soRoteiro:false};
+  document.querySelectorAll('#oque button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.oque==='comer'));
   $('#q').value='';
   document.querySelectorAll('.chip[data-f]').forEach(c=>c.setAttribute('aria-pressed','false'));
   $('#soAmigo').setAttribute('aria-pressed','false');
@@ -433,7 +450,7 @@ const cnt = (fn) => { const m={}; D.lugares.forEach(x=>{const k=fn(x); m[k]=(m[k
 const cCid = cnt(x=>x.c||'Sem cidade');
 chips('#fCidade','cidade', D.cidades.map(c=>[c,c,cCid[c]]));
 const cGrp = cnt(x=>x.g);
-chips('#fCozinha','grupo', D.grupos.map(g=>[g,g,cGrp[g]]));
+chips('#fCozinha','grupo', D.grupos.filter(g=>g!=='Hotel'&&g!=='Ver e área').map(g=>[g,g,cGrp[g]]));
 const cAc = cnt(x=>x.ac||'?');
 const ACL = [['livre','Chega e senta'],['fila','Fila'],['dias','Dias antes'],
              ['reserva','Reserva'],['semanas','Semanas antes'],['meses','Meses antes'],
@@ -490,6 +507,15 @@ addEventListener('scroll', () => {
   }
 }, {passive:true});
 
+document.querySelectorAll('#oque button').forEach(b=>b.onclick=()=>{
+  F.oque = b.dataset.oque;
+  document.querySelectorAll('#oque button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  render();
+});
+{ const nH = D.lugares.filter(x=>x.g==='Hotel').length,
+        nP = D.lugares.filter(x=>x.g==='Ver e área').length;
+  $('#ctComer').textContent = D.lugares.length-nH-nP;
+  $('#ctHotel').textContent = nH; $('#ctPasseio').textContent = nP; }
 $('#q').addEventListener('input', e => { F.q = e.target.value.trim().toLowerCase(); render(); });
 $('#soAmigo').onclick = function(){ F.soAmigo=!F.soAmigo;
   this.setAttribute('aria-pressed',F.soAmigo); render(); };
