@@ -167,6 +167,25 @@ input[type=search]::placeholder{color:var(--ink3)}
 .fav[aria-pressed=true]{color:var(--kohaku)}
 .fav:hover{color:var(--kohaku)}
 
+.abas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.abas .oque{margin-bottom:0}
+.oque button[data-view][aria-pressed=true]{background:#24467C;border-color:#24467C}
+.vista-off{display:none!important}
+.fichas{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.pf{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px;
+    display:flex;flex-direction:column;gap:6px}
+.pf .nm{font-family:"Zen Old Mincho",serif;font-weight:900;font-size:20px;line-height:1.15;color:var(--ink)}
+.pf .hd{font-size:12.5px;color:var(--ink3)}
+.pf .hd a{color:var(--ai);text-decoration:none}
+.pf .d{font-size:13.5px;color:var(--ink2);line-height:1.55}
+.pf .d b{color:var(--ink)}
+.vlug{align-self:flex-start;margin-top:4px;font:inherit;font-size:13px;font-weight:700;color:var(--ai);
+      background:none;border:0;padding:0;cursor:pointer}
+.vlug:hover{text-decoration:underline}
+.vlug:focus-visible{outline:2px solid var(--ai);outline-offset:3px}
+.sake .grow{grid-template-columns:1fr auto}
+.sake .grow a{color:var(--ink);text-decoration:none}
+.sake .grow a:hover{text-decoration:underline}
 /* ---------- seções ---------- */
 section{margin:44px 0 0;padding-top:26px;border-top:1px solid var(--line);scroll-margin-top:104px}
 #lista{scroll-margin-top:96px}
@@ -234,11 +253,15 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
 </div></header>
 
 <div class="bar"><div class="wrap">
-  <div class="oque" id="oque">
+  <div class="abas"><div class="oque" id="oque">
     <button data-oque="comer" aria-pressed="true">🍽 Comer e beber<span class="ct" id="ctComer"></span></button>
     <button data-oque="hotel" aria-pressed="false">🏨 Onde ficar<span class="ct" id="ctHotel"></span></button>
     <button data-oque="passeio" aria-pressed="false">⛩ O que ver<span class="ct" id="ctPasseio"></span></button>
-  </div>
+  </div><div class="oque" id="vistas">
+    <button data-view="quem" aria-pressed="false">👥 Quem me guiou</button>
+    <button data-view="tuca" aria-pressed="false">📒 O guia da Tuca</button>
+    <button data-view="sake" aria-pressed="false">🍶 Os saquês do Gerard</button>
+  </div></div>
   <div class="searchrow">
     <input type="search" id="q" placeholder="Buscar por nome, bairro, prato, cozinha…"
       aria-label="Buscar lugares">
@@ -266,30 +289,31 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
   </div>
   <div class="grid" id="grid"></div>
 
-  <section>
+  <section id="sec-quem" class="vista-off" data-vista="quem">
     <h2>Quem me guiou</h2>
-    <p class="sub">O filtro não é algoritmo — são pessoas. Cada número é quantos lugares
-    dessa lista essa pessoa marcou em post no Japão. Clique para ver só os dela.</p>
-    <div class="people"><button class="p" data-amigo="tucagea"><span class="qt">36</span><div class="nm">Tuca Gea</div><div class="hd">@tucagea</div><div class="ds">mandou por e-mail o guia mais detalhado da base — Tóquio, Kyoto e Sapporo</div></button><button class="p" data-amigo="izakaya_d_hira_"><span class="qt">17</span><div class="nm">Daniel Hirá</div><div class="hd">@izakaya_d_hira_</div><div class="ds">come no Japão a vida inteira; o recorte mais amplo da lista</div></button><button class="p" data-amigo="gerard.barberan"><span class="qt">17</span><div class="nm">Gerard Barberán</div><div class="hd">@gerard.barberan</div><div class="ds">chef; viaja pra comer e registra tudo</div></button><button class="p" data-amigo="yamashitatikara"><span class="qt">14</span><div class="nm">Rafa Tikara</div><div class="hd">@yamashitatikara</div><div class="ds">filho do Makoto; sushi e balcão</div></button><button class="p" data-amigo="edo_zushi"><span class="qt">8</span><div class="nm">Chef Suga (Edo Zushi)</div><div class="hd">@edo_zushi</div><div class="ds">sushiman; documentou a própria viagem ao Japão, de Tsukiji a Izu</div></button><button class="p" data-amigo="fabmoon"><span class="qt">5</span><div class="nm">Fabio Moon</div><div class="hd">@fabmoon</div><div class="ds">os balcões mais difíceis de Tóquio</div></button><button class="p" data-amigo="sucrilhos"><span class="qt">4</span><div class="nm">Sucrilhos</div><div class="hd">@sucrilhos</div><div class="ds">Tóquio de rua — ramen, gyoza, beco</div></button><button class="p" data-amigo="makotosanofficial"><span class="qt">3</span><div class="nm">Makoto Shimizu</div><div class="hd">@makotosanofficial</div><div class="ds">chef; sushi e peixe</div></button><button class="p" data-amigo="nobupskm"><span class="qt">2</span><div class="nm">Nobu</div><div class="hd">@nobupskm</div><div class="ds">Kansai, Yokohama e Hokkaido</div></button><button class="p" data-amigo="feliperacarneiro"><span class="qt">1</span><div class="nm">Felipe</div><div class="hd">@feliperacarneiro</div><div class="ds">adições vindas de quem usou o guia e voltou com feedback</div></button><button class="p" data-amigo="sushi_vaz"><span class="qt">1</span><div class="nm">Sushi Vaz</div><div class="hd">@sushi_vaz</div><div class="ds">facas, produtor, bastidor</div></button></div>
+    <p class="sub">O filtro não é algoritmo — são pessoas que foram ao Japão e contaram onde
+    comeram. Cada ficha diz quem é a pessoa e leva aos lugares que ela indicou.</p>
+    <div class="fichas" id="fichas"></div>
+    <p class="sub" id="tambem" style="margin-top:18px"></p>
   </section>
 
-  <section>
+  <section id="sec-perfis" class="vista-off" data-vista="quem">
     <h2>Perfis para seguir</h2>
     <p class="sub">Chefs e guias japoneses que eu sigo. Não são lugares para reservar —
     são fontes. É daqui que sai boa parte do que aparece acima.</p>
     <div class="gwrap"><div class="grow"><div><span class="gn">Eiji Kikuchi</span><span class="gl"> — Chef · Chef japonês.</span></div><div></div><div><a href="https://instagram.com/kikuchisan" target="_blank" rel="noopener">@kikuchisan</a></div></div><div class="grow"><div><span class="gn">Ken Tanaka</span><span class="gl"> — Chef · Chef japonês que ensina técnica de casa, não de restaurante.</span></div><div></div><div><a href="https://instagram.com/chefkentanaka" target="_blank" rel="noopener">@chefkentanaka</a></div></div><div class="grow"><div><span class="gn">Kohei Onoda</span><span class="gl"> — Chef · Chef japonês.</span></div><div></div><div><a href="https://instagram.com/koheionodada" target="_blank" rel="noopener">@koheionodada</a></div></div><div class="grow"><div><span class="gn">Leopoldo Bueno</span><span class="gl"> — Chef · Brasileiro cozinhando no Japão — ponte entre as duas cenas.</span></div><div></div><div><a href="https://instagram.com/leopoldo_bueno" target="_blank" rel="noopener">@leopoldo_bueno</a></div></div><div class="grow"><div><span class="gn">Makoto Shimizu</span><span class="gl"> — Chef · Chef japonês, técnica de balcão.</span></div><div></div><div><a href="https://instagram.com/makoto___shimizu" target="_blank" rel="noopener">@makoto___shimizu</a></div></div><div class="grow"><div><span class="gn">Michihiko Shindo</span><span class="gl"> — Chef · Brasileiro-japonês no circuito de ramen.</span></div><div></div><div><a href="https://instagram.com/brazilamen" target="_blank" rel="noopener">@brazilamen</a></div></div><div class="grow"><div><span class="gn">Ryujiro Nakamura</span><span class="gl"> — Chef · Chef japonês, cozinha sazonal.</span></div><div></div><div><a href="https://instagram.com/ryujirounakamura" target="_blank" rel="noopener">@ryujirounakamura</a></div></div><div class="grow"><div><span class="gn">Suzuki Ie</span><span class="gl"> — Chef · Chef japonês.</span></div><div></div><div><a href="https://instagram.com/iesuzuki" target="_blank" rel="noopener">@iesuzuki</a></div></div><div class="grow"><div><span class="gn">Takaaki Ikeda</span><span class="gl"> — Chef · Chef japonês, conteúdo de bastidor de cozinha.</span></div><div></div><div><a href="https://instagram.com/ike_chan.igm" target="_blank" rel="noopener">@ike_chan.igm</a></div></div><div class="grow"><div><span class="gn">Tomoki Hata</span><span class="gl"> — Chef</span></div><div></div><div><a href="https://instagram.com/torisaki_kyoto" target="_blank" rel="noopener">@torisaki_kyoto</a></div></div><div class="grow"><div><span class="gn">Yoji Tokuyoshi</span><span class="gl"> — Chef · Chef japonês formado na Itália — cozinha os dois mundos.</span></div><div></div><div><a href="https://instagram.com/yojitokuyoshi" target="_blank" rel="noopener">@yojitokuyoshi</a></div></div><div class="grow"><div><span class="gn">Airi — Yakiniku</span><span class="gl"> — Guia · A 'princesa do yakiniku' — só carne, país inteiro.</span></div><div></div><div><a href="https://instagram.com/airi_meat_0802" target="_blank" rel="noopener">@airi_meat_0802</a></div></div><div class="grow"><div><span class="gn">AsukuNavi Osaka</span><span class="gl"> — Guia · O mesmo guia, cobrindo Osaka, Kyoto e Nara.</span></div><div></div><div><a href="https://instagram.com/asukunavi.osaka_food" target="_blank" rel="noopener">@asukunavi.osaka_food</a></div></div><div class="grow"><div><span class="gn">AsukuNavi Tokyo</span><span class="gl"> — Guia · Guia de Tóquio com foco em casas de bairro, não em turistão.</span></div><div></div><div><a href="https://instagram.com/asukunavi.tokyo_food" target="_blank" rel="noopener">@asukunavi.tokyo_food</a></div></div><div class="grow"><div><span class="gn">Chipask — Fukuoka</span><span class="gl"> — Guia · Fukuoka: ramen tonkotsu, yatai de rua e doce.</span></div><div></div><div><a href="https://instagram.com/chippachapus" target="_blank" rel="noopener">@chippachapus</a></div></div><div class="grow"><div><span class="gn">Delicious Japan</span><span class="gl"> — Guia · Guia geral do Japão em inglês, bom pra planejar roteiro.</span></div><div></div><div><a href="https://instagram.com/delicious_japan_guide" target="_blank" rel="noopener">@delicious_japan_guide</a></div></div><div class="grow"><div><span class="gn">Harahetta</span><span class="gl"> — Guia · Comida cotidiana japonesa, o que se come de verdade.</span></div><div></div><div><a href="https://instagram.com/hihihigohan" target="_blank" rel="noopener">@hihihigohan</a></div></div><div class="grow"><div><span class="gn">Harapeko</span><span class="gl"> — Guia · Diário de fome — casas populares e porções fartas.</span></div><div></div><div><a href="https://instagram.com/harapeko_jpn" target="_blank" rel="noopener">@harapeko_jpn</a></div></div><div class="grow"><div><span class="gn">Hungry Moju</span><span class="gl"> — Guia · Doce, café e comida de rua japonesa.</span></div><div></div><div><a href="https://instagram.com/hungrymoju" target="_blank" rel="noopener">@hungrymoju</a></div></div><div class="grow"><div><span class="gn">JAPAN FOOD MAP</span><span class="gl"> — Guia · Mapa de comida do Japão inteiro, com endereço e como chegar.</span></div><div></div><div><a href="https://instagram.com/japan.food.map" target="_blank" rel="noopener">@japan.food.map</a></div></div><div class="grow"><div><span class="gn">Ko Sakamoto — Hokkaido</span><span class="gl"> — Guia · Hokkaido: caranguejo, leite, cordeiro e o melhor peixe do país.</span></div><div></div><div><a href="https://instagram.com/kosakamoto2" target="_blank" rel="noopener">@kosakamoto2</a></div></div><div class="grow"><div><span class="gn">Kyoto Itookashi</span><span class="gl"> — Guia · Kyoto pela rua Takatsuji: café da manhã, almoço e doce tradicional.</span></div><div></div><div><a href="https://instagram.com/kyoto_itookashi" target="_blank" rel="noopener">@kyoto_itookashi</a></div></div><div class="grow"><div><span class="gn">Marina Tsuge</span><span class="gl"> — Guia · Marina Tsuge explica o Japão em português — contexto cultural junto com a comida.</span></div><div></div><div><a href="https://instagram.com/japaocomtsuge" target="_blank" rel="noopener">@japaocomtsuge</a></div></div><div class="grow"><div><span class="gn">Misa — Osaka</span><span class="gl"> — Guia · Osaka em ritmo leve, casas de bairro e doce.</span></div><div></div><div><a href="https://instagram.com/misa_stagram_osaka" target="_blank" rel="noopener">@misa_stagram_osaka</a></div></div><div class="grow"><div><span class="gn">Mogu Mogu Food</span><span class="gl"> — Guia · Comida japonesa apresentada pra fora do Japão.</span></div><div></div><div><a href="https://instagram.com/mogu__mogu__food" target="_blank" rel="noopener">@mogu__mogu__food</a></div></div><div class="grow"><div><span class="gn">Mr.Tokyo</span><span class="gl"> — Guia · Tóquio pelos olhos de quem mora lá.</span></div><div></div><div><a href="https://instagram.com/mr.tokyo.adventures" target="_blank" rel="noopener">@mr.tokyo.adventures</a></div></div><div class="grow"><div><span class="gn">Osaka Gohan</span><span class="gl"> — Guia · Comida do dia a dia de Osaka, sem filtro de guia.</span></div><div></div><div><a href="https://instagram.com/ichiharajunichiro" target="_blank" rel="noopener">@ichiharajunichiro</a></div></div><div class="grow"><div><span class="gn">Osaka Gourmet</span><span class="gl"> — Guia · Osaka em modo local: takoyaki, kushikatsu e balcão barulhento.</span></div><div></div><div><a href="https://instagram.com/b.osaka" target="_blank" rel="noopener">@b.osaka</a></div></div><div class="grow"><div><span class="gn">Plan Japan</span><span class="gl"> — Guia · Planejamento de viagem ao Japão, incluindo reservas de restaurante.</span></div><div></div><div><a href="https://instagram.com/planjapan" target="_blank" rel="noopener">@planjapan</a></div></div><div class="grow"><div><span class="gn">Ryo Japan Tokyo Tour Guide</span><span class="gl"> — Guia · Guia local de Tóquio que leva estrangeiro em casa de japonês.</span></div><div></div><div><a href="https://instagram.com/foodtokyotourguide" target="_blank" rel="noopener">@foodtokyotourguide</a></div></div><div class="grow"><div><span class="gn">SHOKUJI CHRONICLES</span><span class="gl"> — Guia · Crônicas de refeição — texto junto com a foto.</span></div><div></div><div><a href="https://instagram.com/shokuji_chronicles" target="_blank" rel="noopener">@shokuji_chronicles</a></div></div><div class="grow"><div><span class="gn">Tabelog Japan by Locals</span><span class="gl"> — Guia · Tabelog é o TripAdvisor japonês, e nota 3.5 lá já é excelente. Este perfil traduz o ranking.</span></div><div></div><div><a href="https://instagram.com/tabelog_japanbylocals" target="_blank" rel="noopener">@tabelog_japanbylocals</a></div></div><div class="grow"><div><span class="gn">Tokyo Trend Trip</span><span class="gl"> — Guia · O que abriu de novo em Tóquio, atualizado toda semana.</span></div><div></div><div><a href="https://instagram.com/tokyo_trend_trip" target="_blank" rel="noopener">@tokyo_trend_trip</a></div></div><div class="grow"><div><span class="gn">Turismo Japão</span><span class="gl"> — Guia · Guias brasileiros que vivem no Japão — série boa de yokochos e destinos fora do eixo Tóquio–Kyoto. Vendem tour, então leia como guia, não como indicação isenta.</span></div><div></div><div><a href="https://instagram.com/turismo.japao" target="_blank" rel="noopener">@turismo.japao</a></div></div><div class="grow"><div><span class="gn">Umelog</span><span class="gl"> — Guia · Um sommelier de saquê que também é médico, catalogando o país inteiro.</span></div><div></div><div><a href="https://instagram.com/umelog_1002" target="_blank" rel="noopener">@umelog_1002</a></div></div><div class="grow"><div><span class="gn">Yama Ari</span><span class="gl"> — Guia · Perfil japonês de comida e montanha.</span></div><div></div><div><a href="https://instagram.com/ayayaaaannn" target="_blank" rel="noopener">@ayayaaaannn</a></div></div><div class="grow"><div><span class="gn">Yuto Gourmet</span><span class="gl"> — Guia · Gourmet diário com foco em doce.</span></div><div></div><div><a href="https://instagram.com/yuuuuto38" target="_blank" rel="noopener">@yuuuuto38</a></div></div><div class="grow"><div><span class="gn">グルメ大学 JAPAN</span><span class="gl"> — Guia · Compilado de restaurantes pelo Japão, com foco em bom custo.</span></div><div></div><div><a href="https://instagram.com/gourmet_uni_japan" target="_blank" rel="noopener">@gourmet_uni_japan</a></div></div><div class="grow"><div><span class="gn">Katoman</span><span class="gl"> — Perfil · Perfil japonês de comida.</span></div><div></div><div><a href="https://instagram.com/katomandlc" target="_blank" rel="noopener">@katomandlc</a></div></div></div>
   </section>
 
-  <section>
+  <section data-vista="lista">
     <h2>Um café da manhã no Tsukiji</h2>
-    <p class="sub">O <b>Tsukiji Outer Market</b> já está nos cards acima — Hiroshi, Tuca e
+    <p class="sub">O <b>Tsukiji Outer Market</b> já está nos cards acima — Daniel Hirá, Tuca e
     Tikara passaram por lá. Este é o roteiro de balcão em balcão, na ordem de pedir,
     adaptado do perfil-guia <a href="https://instagram.com/musyatravel" target="_blank"
     rel="noopener">@musyatravel</a>.</p>
     <div class="gwrap"><div class="grow"><span class="gn">1 · Vieira de Hokkaido<div class="gl" style="margin-top:3px;line-height:1.45">Grelhada na concha, no maçarico, na sua frente. Peça com shoyu e manteiga.</div></span></div><div class="grow"><span class="gn">2 · Ostra do tamanho da mão<div class="gl" style="margin-top:3px;line-height:1.45">Aberta na hora. Opcional — só para quem ama ostra.</div></span></div><div class="grow"><span class="gn">3 · Espeto de wagyu<div class="gl" style="margin-top:3px;line-height:1.45">Selagem rápida, só sal. Procure A5, o grau mais alto. Parada obrigatória.</div></span></div><div class="grow"><span class="gn">4 · Trio de atum<div class="gl" style="margin-top:3px;line-height:1.45">Peça akami, chutoro e otoro juntos para comparar: magro, meio-gordo e barriga. Depois disso você pede sushi como um local em qualquer lugar do Japão.</div></span></div><div class="grow"><span class="gn">5 · Yuzu soda<div class="gl" style="margin-top:3px;line-height:1.45">Espremido na hora; tem versão com e sem álcool. Limpa o paladar entre as mordidas ricas.</div></span></div><div class="grow"><span class="gn">6 · Perna de caranguejo<div class="gl" style="margin-top:3px;line-height:1.45">No vapor, desfiada na hora.</div></span></div><div class="grow"><span class="gn">7 · Daifuku<div class="gl" style="margin-top:3px;line-height:1.45">Mochi macio recheado de doce de feijão. A sobremesa tradicional.</div></span></div><div class="grow"><span class="gn">8 · Saquê<div class="gl" style="margin-top:3px;line-height:1.45">Flight de saquês regionais para fechar.</div></span></div><div class="grow"><span class="gn">Quando ir<div class="gl" style="margin-top:3px;line-height:1.45">Das 8h às 10h é o auge. Quase tudo fecha às 14h. Quarta e domingo são mais vazios; terça muita banca ligada ao atacado fecha.</div></span></div></div>
   </section>
 
-  <section>
+  <section id="sec-tuca" class="vista-off" data-vista="tuca">
     <h2>O guia da Tuca</h2>
     <p class="sub">A <b>Ana Maria &ldquo;Tuca&rdquo; Gea</b> (<a href="https://instagram.com/tucagea"
     target="_blank" rel="noopener">@tucagea</a>) mandou isto por e-mail depois da viagem dela —
@@ -305,7 +329,7 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
     <h3 style="font-family:'Zen Old Mincho',serif;font-size:18px;margin:18px 0 8px">Tóquio</h3><div class="gwrap"><div class="grow"><span class="gn"><a href="https://www.ghibli-museum.jp/en/" target="_blank" rel="noopener">Museu Ghibli</a> <span class="gl">三鷹の森ジブリ美術館</span><div class="gl" style="margin-top:3px;line-height:1.45">Reserve assim que abrir — esgota rápido. Nem ela conseguiu ingresso.</div></span></div><div class="grow"><span class="gn"><a href="https://teamlabplanets.dmm.com/en" target="_blank" rel="noopener">teamLab Planets</a> <span class="gl">チームラボプラネッツ</span><div class="gl" style="margin-top:3px;line-height:1.45">Foi nesse e amou. Há dois teamLab em Tóquio: Planets é o mais indicado para crianças, o outro é o Borderless.</div></span></div><div class="grow"><span class="gn"><a href="https://sankan.kunaicho.go.jp/english/" target="_blank" rel="noopener">Palácio Imperial</a> <span class="gl">皇居</span><div class="gl" style="margin-top:3px;line-height:1.45">Ingresso também é difícil. Vale pelos jardins externos, onde os japoneses correm de manhã.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Ueno%20Park%20Tokyo" target="_blank" rel="noopener">Ueno Park</a> <span class="gl">上野公園</span><div class="gl" style="margin-top:3px;line-height:1.45">Parque grande, cheio de templo e museu — dá para passar o dia. Ela fez o Tokyo Metropolitan Art Museum (exposição do Miró), o Tokyo National Museum (armaduras de xogum, cerâmica) e o Toshogu Shrine, o primeiro templo xintoísta que ela viu, com lanternas de cobre e um pagode alto ao lado.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Sensoji%20Temple%20Asakusa%20Tokyo" target="_blank" rel="noopener">Senso-ji</a> <span class="gl">浅草寺</span><div class="gl" style="margin-top:3px;line-height:1.45">Área de templo enorme e turística, cercada de ruas de bar, restaurante e loja.</div></span></div><div class="grow"><span class="gn"><a href="https://www.kabukiweb.net/theatres/kabukiza/" target="_blank" rel="noopener">Kabuki-za</a> <span class="gl">歌舞伎座</span><div class="gl" style="margin-top:3px;line-height:1.45">Teatro kabuki tradicional, com homens em todos os papéis, inclusive os femininos. Muito bonito, mas longo: só vá se você curte teatro e ópera.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Meiji%20Jingu%20Tokyo" target="_blank" rel="noopener">Meiji-jingu</a> <span class="gl">明治神宮</span><div class="gl" style="margin-top:3px;line-height:1.45">Outro complexo enorme, com o torii gigante de madeira. Na entrada ficam os barris de saquê — e os de vinho.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Shibuya%20Scramble%20Crossing%20Tokyo" target="_blank" rel="noopener">Cruzamento de Shibuya</a> <span class="gl">渋谷スクランブル交差点</span><div class="gl" style="margin-top:3px;line-height:1.45">Está em toda lista de turista. A estátua do Hachiko ao lado tem uma história que vale saber antes.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Shinjuku%20Tokyo" target="_blank" rel="noopener">Shinjuku</a> <span class="gl">新宿</span><div class="gl" style="margin-top:3px;line-height:1.45">Avenida de painéis de LED tipo Times Square e vários becos com muito restaurante e pub.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=UNIQLO%20TOKYO%20Ginza" target="_blank" rel="noopener">Uniqlo, Muji e Onitsuka Tiger</a><div class="gl" style="margin-top:3px;line-height:1.45">As duas primeiras existem na Europa mas são japonesas e ela não pula. Para o Onitsuka Tiger, prepare-se: as filas são enormes.</div></span></div></div><h3 style="font-family:'Zen Old Mincho',serif;font-size:18px;margin:18px 0 8px">Kyoto</h3><div class="gwrap"><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Fushimi%20Inari%20Taisha%20Kyoto" target="_blank" rel="noopener">Fushimi Inari — Senbon Torii</a> <span class="gl">伏見稲荷大社</span><div class="gl" style="margin-top:3px;line-height:1.45">Os mil portões laranja, provavelmente o lugar mais fotografado de Kyoto. Cheio de gente, e ainda assim impressionante. A subida do Monte Inari tem uma vista bonita da cidade.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Toji%20Temple%20Kyoto" target="_blank" rel="noopener">To-ji</a> <span class="gl">東寺</span><div class="gl" style="margin-top:3px;line-height:1.45">Perto da estação, com um pagode de cinco andares e um jardim lindo.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Nanzenji%20Temple%20Kyoto" target="_blank" rel="noopener">Caminhada Nanzen-ji → Eikando → Ginkaku-ji</a><div class="gl" style="margin-top:3px;line-height:1.45">No nordeste da cidade dá para caminhar de templo em templo e cobrir vários no mesmo passeio. Ela começou no Nanzen-ji, parou no Eikando e terminou no Higashiyama Jisho-ji, que tinha o jardim mais bonito de todos.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Kinkakuji%20Golden%20Pavilion%20Kyoto" target="_blank" rel="noopener">Kinkaku-ji</a> <span class="gl">金閣寺</span><div class="gl" style="margin-top:3px;line-height:1.45">O Templo Dourado — o mais bonito por fora, folheado a ouro. Existe a história do monge que o incendiou por ciúme; o templo foi reconstruído e o caso virou livro.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Ryoanji%20Temple%20Kyoto" target="_blank" rel="noopener">Ryoan-ji</a> <span class="gl">龍安寺</span><div class="gl" style="margin-top:3px;line-height:1.45">Templo budista conhecido pelo jardim zen de sete pedras. Muito silencioso.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Tenryuji%20Temple%20Arashiyama%20Kyoto" target="_blank" rel="noopener">Tenryu-ji</a> <span class="gl">天龍寺</span><div class="gl" style="margin-top:3px;line-height:1.45">Templo budista em que se pode entrar, com um jardim de flores bonito e perto da floresta de bambu.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Gion%20Kyoto" target="_blank" rel="noopener">Gion</a> <span class="gl">祇園</span><div class="gl" style="margin-top:3px;line-height:1.45">O distrito das gueixas. Ela fez um tour guiado a pé e recomenda muito: é onde se entende a cultura das gueixas, de onde veio e como é hoje.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Nijo%20Castle%20Kyoto" target="_blank" rel="noopener">Nijo Castle</a> <span class="gl">二条城</span><div class="gl" style="margin-top:3px;line-height:1.45">Ela gostou mais do que do castelo famoso de Osaka: o castelo de madeira, as muralhas de pedra e um jardim lindo.</div></span></div><div class="grow"><span class="gn"><a href="https://www.google.com/maps/search/?api=1&query=Chiso%20Kyoto%20kimono%20gallery" target="_blank" rel="noopener">Chiso Gallery</a> <span class="gl">千總</span><div class="gl" style="margin-top:3px;line-height:1.45">Ela é fascinada por quimono, e esta é a galeria de um pintor de quimonos famoso — também loja, com peças lindas expostas e um telão mostrando a pintura e o bordado.</div></span></div><div class="grow"><span class="gn"><a href="https://www.sagano-kanko.co.jp/" target="_blank" rel="noopener">Sagano Line</a> <span class="gl">嵯峨野観光鉄道</span><div class="gl" style="margin-top:3px;line-height:1.45">Passeio cênico de trem antigo saindo de perto da floresta de bambu. É só ida e volta, mas a vista é bonita.</div></span></div><div class="grow"><span class="gn"><a href="https://maps.app.goo.gl/tyLgnjNRcFSgE7yg9" target="_blank" rel="noopener">Hashi Gallery Moon</a> <span class="gl">箸ギャラリー門</span><div class="gl" style="margin-top:3px;line-height:1.45">A seleção de hashi mais incrível que ela viu.</div></span></div><div class="grow"><span class="gn"><a href="https://maps.app.goo.gl/Fd9Zxmqi54P6j1GB8" target="_blank" rel="noopener">Yozo Art Gallery</a><div class="gl" style="margin-top:3px;line-height:1.45">Lojinha pequena e colorida com gravuras incríveis.</div></span></div></div><h3 style="font-family:'Zen Old Mincho',serif;font-size:18px;margin:18px 0 8px">Sapporo</h3><div class="gwrap"><div class="grow"><span class="gn"><a href="https://maps.app.goo.gl/LY5hdxh4gQ7tCbsX9" target="_blank" rel="noopener">Odori Park e Sapporo TV Tower</a> <span class="gl">大通公園</span><div class="gl" style="margin-top:3px;line-height:1.45">Parque verde no meio da cidade; no inverno recebe a exposição de esculturas de gelo. A melhor vista da cidade é do alto da torre.</div></span></div><div class="grow"><span class="gn"><a href="https://maps.app.goo.gl/bTX33LJzkQpHNk2g7" target="_blank" rel="noopener">Torre do Relógio</a> <span class="gl">札幌市時計台</span><div class="gl" style="margin-top:3px;line-height:1.45">Museu da história de Sapporo, com a torre de relógio de madeira de 1878 do lado de fora.</div></span></div><div class="grow"><span class="gn"><a href="https://maps.app.goo.gl/e5xfHhPN7CsjpSoU7" target="_blank" rel="noopener">Sapporo Beer Museum</a> <span class="gl">サッポロビール博物館</span><div class="gl" style="margin-top:3px;line-height:1.45">Vale muito: conta a história inteira da cerveja Sapporo e o papel dela na modernização do Japão.</div></span></div></div>
   </section>
 
-  <section>
+  <section data-vista="lista">
     <h2>Camada de guias</h2>
     <p class="sub">Separada de propósito. São 342 endereços que os dez perfis-guia
     japoneses postaram e que ninguém que eu conheço visitou.</p>
@@ -324,6 +348,18 @@ footer{margin:52px 0 60px;padding-top:22px;border-top:1px solid var(--line);
       <div class="gwrap" id="gtab"></div>
       <button class="chip" id="gmais" style="margin-top:12px">Mostrar mais</button>
     </div>
+  </section>
+
+  <section id="sec-sake" class="vista-off" data-vista="sake">
+    <h2>Os saquês do Gerard</h2>
+    <p class="sub">O <b>Gerard Barberán</b> (<a href="https://instagram.com/gerard.barberan"
+    target="_blank" rel="noopener">@gerard.barberan</a>) — chef catalão, dono do Kuro e do
+    Bottega Bernacca, em São Paulo — fez uma viagem pelo Japão atrás de saquê. Estas são as
+    casas que ele visitou e postou. Os restaurantes da viagem estão nos cards, com o nome dele.
+    Duas produtoras eu não consegui identificar com certeza, e o texto delas diz isso.</p>
+    <div class="gwrap sake" id="sakeLista"></div>
+    <h3 style="font-family:'Zen Old Mincho',serif;font-size:18px;margin:24px 0 8px">O saquê no roteiro da Tuca</h3>
+    <div class="gwrap sake" id="sakeTuca"></div>
   </section>
 
   <footer>
@@ -464,6 +500,7 @@ function limpar(){
   $('#rotn').setAttribute('aria-pressed','false');
   $('#amigoAtivo').classList.add('hidden');
   render();
+  if(typeof setView==='function') setView('lista');
 }
 
 function chips(sel, campo, itens){
@@ -550,6 +587,84 @@ $('#rotn').onclick = function(){ F.soRoteiro=!F.soRoteiro;
   this.setAttribute('aria-pressed',F.soRoteiro); render(); };
 $('#limpa').onclick = limpar;
 $('#tiraAmigo').onclick = () => { F.amigo=null; $('#amigoAtivo').classList.add('hidden'); render(); };
+
+/* abas: quem me guiou, guia da Tuca, saquês do Gerard */
+const ORDEM = ['izakaya_d_hira_','tucagea','gabriellifleming','lucasdanteb','gerard.barberan',
+  'makotosanofficial','yamashitatikara','edo_zushi','fabmoon','sucrilhos','nobupskm'];
+const CONTAS = {tucagea:['tucagea','terroirofculture'], gabriellifleming:['gabriellifleming','restaurante.cepa'],
+  lucasdanteb:['lucasdanteb','restaurante.cepa']};
+const BIO = {
+ izakaya_d_hira_: 'Do <b>Hirá Izakaya</b>, em São Paulo (Vila Madalena e Jardins). Come no Japão a vida inteira e dá o recorte mais amplo da lista: de mercado e balcão de bairro a kaiseki de estrela.',
+ tucagea: 'Ana Maria "Tuca" Gea, do círculo de confiança do Felipe e das pessoas que mais entendem de vinho por aqui — é dela o <b>Terroir of Culture</b>. Depois da viagem, mandou por e-mail um guia de Tóquio, Kyoto e Sapporo, endereço por endereço: o material mais direto desta base. O que ver e as dicas práticas dela estão na aba <b>O guia da Tuca</b>.',
+ gabriellifleming: 'Sommelière e cofundadora do <b>Cepa</b>, em São Paulo — Melhor Sommelier do Brasil no Prêmio Melhores da Taça 2024 (Prazeres da Mesa). Foi ao Japão em 2026 com o chef Lucas Dante; os balcões e os vinhos dessa viagem estão nos cards com o nome dela.',
+ lucasdanteb: 'Chef do <b>Cepa</b>, em São Paulo. A cozinha da mesma viagem de 2026 da Gabi.',
+ 'gerard.barberan': 'Chef catalão de Barcelona, em São Paulo desde 2016 — dono do <b>Kuro</b> (japonês, nos Jardins) e do <b>Bottega Bernacca</b>. Viaja pra comer e registra tudo: os balcões de sushi de Ginza e, numa viagem só disso, as produtoras da aba <b>Os saquês do Gerard</b>.',
+ makotosanofficial: 'Chef; sushi e peixe. Pai do Rafa Tikara.',
+ yamashitatikara: 'Filho do chef Makoto Shimizu. Sushi e balcão.',
+ edo_zushi: 'Sushiman do <b>Edo Zushi</b>. Documentou a própria viagem ao Japão, de Tsukiji à península de Izu — inclusive a fazenda de wasabi.',
+ fabmoon: 'Quadrinista. Os balcões mais difíceis de Tóquio.',
+ sucrilhos: 'Tóquio de rua — ramen, gyoza, beco.',
+ nobupskm: 'Kansai, Yokohama e Hokkaido.'
+};
+const nPor = k => D.lugares.filter(x=>(x.by||[]).includes(k)).length;
+const igA = h => `<a href="https://instagram.com/${h}" target="_blank" rel="noopener">@${esc(h)}</a>`;
+function montaFichas(){
+  $('#fichas').innerHTML = ORDEM.filter(k=>D.amigos[k]).map(k=>{
+    const n = nPor(k), nome = D.amigos[k][0];
+    return `<div class="pf"><div class="nm">${esc(nome)}</div>
+      <div class="hd">${(CONTAS[k]||[k]).map(igA).join(' · ')}</div>
+      <div class="d">${BIO[k] || esc(D.amigos[k][1]||'')}</div>
+      ${n ? `<button class="vlug" data-amigo="${esc(k)}">ver ${n===1?'o lugar':'os '+n+' lugares'} →</button>` : ''}</div>`;
+  }).join('');
+  const out = Object.keys(D.amigos).filter(k=>!ORDEM.includes(k) && nPor(k));
+  $('#tambem').innerHTML = out.length ? 'Também contribuíram: ' + out.map(k=>
+    `<button class="vlug" style="margin:0" data-amigo="${esc(k)}">${esc(D.amigos[k][0])}</button> (${esc(D.amigos[k][1]||'')})`).join(' · ') + '.' : '';
+}
+function linhaSake(x){
+  const sub = [x.kj, x.c].filter(Boolean).join(' · ');
+  return `<div class="grow"><div><span class="gn"><a href="${gmaps(x)}" target="_blank" rel="noopener">${esc(x.n)}</a></span>
+    ${sub ? `<span class="gl"> — ${esc(sub)}</span>` : ''}
+    <div class="gl" style="margin-top:3px;line-height:1.45">${esc([x.esp!=='Produtora de saquê'?x.esp:'', x.d].filter(Boolean).join(' — '))}</div></div>
+    <div>${x.ig ? igA(x.ig) : ''}</div></div>`;
+}
+function montaSake(){
+  const g = D.lugares.filter(x=>x.g==='Saquê');
+  $('#sakeLista').innerHTML = g.map(linhaSake).join('');
+  const t = D.lugares.filter(x=>x.g!=='Saquê' && /sake|saquê/i.test(x.n+' '+(x.esp||'')) && (x.by||[]).includes('tucagea'));
+  $('#sakeTuca').innerHTML = t.map(linhaSake).join('');
+  $('#sakeTuca').previousElementSibling.classList.toggle('vista-off', !t.length);
+  $('#sakeTuca').classList.toggle('vista-off', !t.length);
+}
+const VISTAS = ['quem','tuca','sake'];
+function setView(v){
+  document.querySelectorAll('[data-vista]').forEach(s=>s.classList.toggle('vista-off', s.dataset.vista!==v));
+  ['.searchrow','#facets','.meta','#grid'].forEach(sel=>{ const e=$(sel); if(e) e.classList.toggle('vista-off', v!=='lista'); });
+  $('#resumo').classList.toggle('vista-off', v!=='lista');
+  document.querySelectorAll('#vistas button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.view===v));
+  if(v!=='lista') document.querySelectorAll('#oque button').forEach(b=>b.setAttribute('aria-pressed','false'));
+  const h = v==='lista' ? '' : '#'+v;
+  if(location.hash !== h) history.replaceState(null, '', location.pathname + location.search + h);
+}
+const sobeAoTopo = () => { const y = document.querySelector('header').offsetHeight;
+  if(scrollY > y) scrollTo({top:y, behavior:'smooth'}); };
+document.querySelectorAll('#vistas button').forEach(b=>b.addEventListener('click',()=>{ setView(b.dataset.view); sobeAoTopo(); }));
+document.querySelectorAll('#oque button').forEach(b=>b.addEventListener('click',()=>{
+  if(!$('#grid').classList.contains('vista-off')) return;
+  if(!F.oque){ F.oque = b.dataset.oque; render(); }
+  setView('lista'); sobeAoTopo(); }));
+document.addEventListener('click', ev=>{
+  const v = ev.target.closest('.vlug[data-amigo]'); if(!v) return;
+  const k = v.dataset.amigo;
+  F.amigo = k; F.oque = null;
+  document.querySelectorAll('#oque button').forEach(b=>b.setAttribute('aria-pressed','false'));
+  $('#amigoAtivo').classList.remove('hidden');
+  $('#amigoNome').textContent = (D.amigos[k]||[k])[0];
+  setView('lista'); render();
+  document.getElementById('lista').scrollIntoView({behavior:'smooth',block:'start'});
+});
+montaFichas(); montaSake();
+const vistaDoHash = () => setView(VISTAS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'lista');
+vistaDoHash(); addEventListener('hashchange', vistaDoHash);
 
 /* camada de guias */
 let gAberta = false, gN = 60;
